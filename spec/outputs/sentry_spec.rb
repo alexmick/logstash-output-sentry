@@ -9,7 +9,6 @@ describe LogStash::Outputs::Sentry do
           url => "http://web:9000/api"
           project_id => "2"
           key => "Sheez5ohZ8Ohdiquei2E"
-          secret => "vie4eituy2aYoongeege"
         }
       }
     CONFIG

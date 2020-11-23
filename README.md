@@ -33,13 +33,14 @@ It fits somewhere in-between a simple metrics solution (such as Graphite) and a 
 ```
 [http|https]://[key]:[secret]@[host]/[project_id]
 ```
+**NB**: Since July 2020 the `secret` part of the DSN is deprecated and ignored. You can safely use this plugin without a secret.
 
 * Setup logstash to write to sentry:
 ```ruby
 output {
   sentry {
     'key' => "yourkey"
-    'secret' => "yoursecret"
+    'secret' => "yoursecret" # optional
     'project_id' => "yourprojectid"
   }
 }

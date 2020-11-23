@@ -13,7 +13,7 @@ class LogStash::Outputs::Sentry < LogStash::Outputs::Base
   # Project id, key and secret
   config :project_id, :validate => :string, :required => true
   config :key, :validate => :string, :required => true
-  config :secret, :validate => :string, :required => true
+  config :secret, :validate => :string, :required => false
 
   def self.sentry_key(name, field_default=nil, value_default=nil)
     name = name.to_s if name.is_a?(Symbol)
@@ -121,11 +121,11 @@ class LogStash::Outputs::Sentry < LogStash::Outputs::Base
   end
 
   def send_packet(event, packet, timestamp)
-    auth_header = "Sentry sentry_version=5," +
-      "sentry_client=raven_logstash/0.4.0," +
-      "sentry_timestamp=#{timestamp.to_i}," +
-      "sentry_key=#{event.sprintf(@key)}," +
-      "sentry_secret=#{event.sprintf(@secret)}"
+    auth_header = "Sentry sentry_version=5" +
+      ",sentry_client=raven_logstash/0.4.0" +
+      ",sentry_timestamp=#{timestamp.to_i}" +
+      ",sentry_key=#{event.sprintf(@key)}" +
+      ",sentry_secret=#{event.sprintf(@secret)}" ? @secret : ""
 
     url = "#{event.sprintf(@url)}/#{event.sprintf(@project_id)}/store/"
 
